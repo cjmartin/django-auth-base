@@ -124,6 +124,35 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    
+    'south',
+    'social_auth',
+    
+    'accounts',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.contrib.flickr.FlickrBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL           = '/login/flickr/'
+LOGOUT_URL          = '/logout/'
+LOGIN_REDIRECT_URL  = '/'
+LOGIN_ERROR_URL     = '/'
+
+SOCIAL_AUTH_ENABLED_BACKENDS = ('flickr')
+
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    'social_auth.backends.pipeline.user.get_username',
+    'social_auth.backends.pipeline.user.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details',
+    'accounts.pipeline.update_extra_values',
 )
 
 # A sample logging configuration. The only tangible logging
